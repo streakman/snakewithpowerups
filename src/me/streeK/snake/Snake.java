@@ -37,7 +37,8 @@ public class Snake extends JPanel {
     Thread renderThread = new Thread(() -> {
       while (GameLogic.inGame) {
         try {
-          long timePerTick = (1000 / 60);
+          // calculates the target fps
+          long timePerTick = (1000 / 240);
           repaint();
           Thread.sleep(timePerTick);
         } catch (InterruptedException e) {
