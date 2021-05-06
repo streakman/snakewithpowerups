@@ -36,12 +36,13 @@ public class Renderer {
   private void drawPlayer(Graphics2D g) {
     Player player = GameLogic.activePlayer;
     if (player != null) {
-      player.drawHead(g);
+        player.drawHead(g);
+      }
+
       for (Location location : player.getBodyLocations()) {
         g.drawImage(player.getBodyImage(), location.getX(), location.getY(), null);
       }
     }
   }
 
-}
 

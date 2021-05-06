@@ -65,7 +65,7 @@ public class GameLogic {
     if (GameLogic.gameIsOver || GameLogic.isGamePaused) {
       return;
     }
-    GameLogic.activePlayer.move(); // TODO check collision before actually moving
+    GameLogic.activePlayer.move();
     checkCollision();
     checkIfOnApple();
     checkIfOnPowerup();
