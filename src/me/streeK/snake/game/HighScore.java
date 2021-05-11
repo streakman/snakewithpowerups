@@ -32,5 +32,13 @@ public class HighScore {
     public void increaseScore() {
         currentScore ++;
     }
+
+    public int getCurrentScore() {
+        return currentScore;
+    }
+
+    public int getHighScore() {
+        return highScore;
+    }
 }
 

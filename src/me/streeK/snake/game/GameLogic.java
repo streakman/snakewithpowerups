@@ -9,6 +9,7 @@ import me.streeK.snake.entities.Entity;
 import me.streeK.snake.entities.Location;
 import me.streeK.snake.entities.Player;
 import me.streeK.snake.entities.Powerup;
+import me.streeK.snake.input.Keylistener;
 import me.streeK.snake.render.Background;
 
 public class GameLogic {
@@ -90,6 +91,7 @@ public class GameLogic {
     }
 
     GameLogic.activePlayer = new Player();
+    Keylistener.setCurrentInputMoveDirection(MoveDirection.RIGHT);
     for (int i = 1; i <= Constants.SNAKE_LENGTH; i++) {
       GameLogic.activePlayer.addBodyPart(new Location(activePlayer.getX() - i * Constants.DOT_SIZE, activePlayer.getY()));
     }

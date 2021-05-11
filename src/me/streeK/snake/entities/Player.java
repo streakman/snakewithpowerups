@@ -4,29 +4,29 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.ImageIcon;
 import me.streeK.snake.Constants;
-import me.streeK.snake.game.GameLogic;
+import me.streeK.snake.game.MoveDirection;
 import me.streeK.snake.input.Keylistener;
 
 import static me.streeK.snake.game.GameLogic.*;
 
 public class Player extends Entity {
 
-  private final Image body;
-  ImageIcon headUpIcon = new ImageIcon("resources/head.png");
-  ImageIcon headDownIcon = new ImageIcon("resources/headDown.png");
-  ImageIcon headLeftIcon = new ImageIcon("resources/headLeft.png");
-  ImageIcon headRightIcon = new ImageIcon("resources/headRight.png");
-  private Image headUp = headUpIcon.getImage();
-  private Image headDown = headDownIcon.getImage();
-  private Image headLeft = headLeftIcon.getImage();
-  private Image headRight = headRightIcon.getImage();
+    private final Image body;
+    ImageIcon headUpIcon = new ImageIcon("resources/head.png");
+    ImageIcon headDownIcon = new ImageIcon("resources/headDown.png");
+    ImageIcon headLeftIcon = new ImageIcon("resources/headLeft.png");
+    ImageIcon headRightIcon = new ImageIcon("resources/headRight.png");
+    private final Image headUp = headUpIcon.getImage();
+    private final Image headDown = headDownIcon.getImage();
+    private final Image headLeft = headLeftIcon.getImage();
+    private final Image headRight = headRightIcon.getImage();
 
 
-
-  private Direction currentDirection = Direction.RIGHT;
-  private final List<Location> bodyLocations = new CopyOnWriteArrayList<>();
+    private MoveDirection currentMoveDirection = MoveDirection.RIGHT;
+    private final List<Location> bodyLocations = new CopyOnWriteArrayList<>();
 
 
   public Player() {
@@ -39,24 +39,24 @@ public class Player extends Entity {
   public void move() {
     Location lastHeadLocation = new Location(x, y);
 
-    switch (Keylistener.getCurrentInputMoveDirection()) {
-      case UP:
-        currentDirection = Direction.UP;
-        y -= Constants.DOT_SIZE;
-        break;
-      case RIGHT:
-        currentDirection = Direction.RIGHT;
-        x += Constants.DOT_SIZE;
-        break;
-      case DOWN:
-        currentDirection = Direction.DOWN;
-        y += Constants.DOT_SIZE;
-        break;
-      case LEFT:
-        currentDirection = Direction.LEFT;
-        x -= Constants.DOT_SIZE;
-        break;
-    }
+        switch (Keylistener.getCurrentInputMoveDirection()) {
+            case UP:
+                currentMoveDirection = MoveDirection.UP;
+                y -= Constants.DOT_SIZE;
+                break;
+            case RIGHT:
+                currentMoveDirection = MoveDirection.RIGHT;
+                x += Constants.DOT_SIZE;
+                break;
+            case DOWN:
+                currentMoveDirection = MoveDirection.DOWN;
+                y += Constants.DOT_SIZE;
+                break;
+            case LEFT:
+                currentMoveDirection = MoveDirection.LEFT;
+                x -= Constants.DOT_SIZE;
+                break;
+        }
 
     if (!checkIfOnApple()) {
       bodyLocations.remove(bodyLocations.size() - 1);
@@ -65,21 +65,27 @@ public class Player extends Entity {
   }
 
 
-  public void drawHead(Graphics2D g) {
-    if (activePlayer.currentDirection == Direction.LEFT) {
-      activePlayer.setImage(headLeft);
+    public void drawHead(Graphics2D g) {
+        if (activePlayer.currentMoveDirection == MoveDirection.LEFT) {
+            activePlayer.setImage(headLeft);
+        }
+        if (activePlayer.currentMoveDirection == MoveDirection.RIGHT) {
+            activePlayer.setImage(headRight);
+        }
+        if (activePlayer.currentMoveDirection == MoveDirection.UP) {
+            activePlayer.setImage(headUp);
+        }
+        if (activePlayer.currentMoveDirection == MoveDirection.DOWN) {
+            activePlayer.setImage(headDown);
+        }
+        g.drawImage(activePlayer.getImage(), x, y, null);
     }
-    if (activePlayer.currentDirection == Direction.RIGHT) {
-      activePlayer.setImage(headRight);
+
+    @Override
+    public void generateRandomCords() {
+        x = ThreadLocalRandom.current().nextInt(6,38) * Constants.DOT_SIZE;
+        y = ThreadLocalRandom.current().nextInt(6,38) * Constants.DOT_SIZE;
     }
-    if (activePlayer.currentDirection == Direction.UP) {
-      activePlayer.setImage(headUp);
-    }
-    if (activePlayer.currentDirection == Direction.DOWN) {
-      activePlayer.setImage(headDown);
-    }
-    g.drawImage(activePlayer.getImage(), x, y, null);
-  }
 
   public Image getBodyImage() {
     return body;
@@ -89,19 +95,13 @@ public class Player extends Entity {
     return bodyLocations;
   }
 
-  public Direction getCurrentDirection() {
-    return currentDirection;
-  }
+    public MoveDirection getCurrentDirection() {
+        return currentMoveDirection;
+    }
 
-
-  public enum Direction {
-    UP, RIGHT, DOWN, LEFT
-
-  }
-
-  public void addBodyPart(Location location) {
-    bodyLocations.add(location);
-  }
+    public void addBodyPart(Location location) {
+        bodyLocations.add(location);
+    }
 
   public void clearBodyLocations() {
     bodyLocations.clear();

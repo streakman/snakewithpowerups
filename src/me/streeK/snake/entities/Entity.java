@@ -16,8 +16,8 @@ public class Entity {
   }
 
   public void generateRandomCords() {
-    x = (ThreadLocalRandom.current().nextInt(2, 49)* 10);
-    y = (ThreadLocalRandom.current().nextInt(2, 49)* 10);
+    x = (ThreadLocalRandom.current().nextInt(1, 49)* 10);
+    y = (ThreadLocalRandom.current().nextInt(1, 49)* 10);
   }
 
   public int getX() {
