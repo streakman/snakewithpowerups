@@ -21,6 +21,7 @@ public class GameLogic {
   public static boolean gameIsOver = false;
   public static boolean isGamePaused = false;
   private static long activationTime;
+  public static HighScore score = new HighScore();
 
   static {
     initGame();
@@ -29,6 +30,7 @@ public class GameLogic {
   public static boolean checkIfOnApple() {
     if (activePlayer.getX() == activeApple.getX() && activePlayer.getY() == activeApple.getY()) {
       activeApple = new Apple();
+      score.increaseScore();
       return true;
     }
     return false;
@@ -52,6 +54,7 @@ public class GameLogic {
       || activePlayer.getY() < Constants.BORDER_MIN_HEIGHT
       || activePlayer.getY() >= Constants.BORDER_MAX_HEIGHT) {
       gameIsOver = true;
+      score.checkIfNewHighscore();
     }
     for (Location location : activePlayer.getBodyLocations()) {
       if (activePlayer.getX() == location.getX() && activePlayer.getY() == location.getY()) {
