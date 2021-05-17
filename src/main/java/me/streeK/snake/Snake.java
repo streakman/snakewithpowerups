@@ -6,13 +6,13 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import me.streeK.snake.game.GameLogic;
 import me.streeK.snake.input.Keylistener;
 import me.streeK.snake.render.Renderer;
+import me.streeK.snake.utils.FileUtils;
 
 public class Snake extends JPanel {
 
@@ -27,8 +27,7 @@ public class Snake extends JPanel {
     jFrame.addKeyListener(new Keylistener());
     jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-    ImageIcon gameImageIcon = new ImageIcon("resources/gameicon.png");
-    Image gameIcon = gameImageIcon.getImage();
+    Image gameIcon = FileUtils.loadImageFromResources("gameicon.png");
     jFrame.setIconImage(gameIcon);
 
     jFrame.add(this);

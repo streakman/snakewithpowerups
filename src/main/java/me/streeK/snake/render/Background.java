@@ -1,15 +1,14 @@
 package me.streeK.snake.render;
 
 import java.awt.Image;
-import javax.swing.ImageIcon;
+import me.streeK.snake.utils.FileUtils;
 
 public class Background {
 
   private Image bgImage;
 
   public Background(String imageName) {
-    ImageIcon backgroundImage = new ImageIcon("resources/" + imageName);
-    bgImage = backgroundImage.getImage();
+    bgImage = FileUtils.loadImageFromResources(imageName);
   }
 
   public Image getBgImage() {

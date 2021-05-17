@@ -2,15 +2,14 @@ package me.streeK.snake.render;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
-import javax.swing.ImageIcon;
+import me.streeK.snake.utils.FileUtils;
 
 public class GameOver {
 
   private Image gameOverScreen;
 
   public GameOver(String imageName) {
-    ImageIcon imageGameOver = new ImageIcon("resources/" + imageName);
-    gameOverScreen = imageGameOver.getImage();
+    gameOverScreen = FileUtils.loadImageFromResources(imageName);
   }
 
   public void draw(Graphics2D g) {

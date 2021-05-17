@@ -2,7 +2,7 @@ package me.streeK.snake.entities;
 
 import java.awt.Image;
 import java.util.concurrent.ThreadLocalRandom;
-import javax.swing.ImageIcon;
+import me.streeK.snake.utils.FileUtils;
 
 public class Entity {
 
@@ -11,8 +11,7 @@ public class Entity {
   private Image image;
 
   public Entity(String imageName) {
-    ImageIcon imageEntity = new ImageIcon("resources/" + imageName);
-    image = imageEntity.getImage();
+    image = FileUtils.loadImageFromResources(imageName);
   }
 
   public void generateRandomCords() {

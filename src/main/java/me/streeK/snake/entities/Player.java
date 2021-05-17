@@ -8,23 +8,18 @@ import java.awt.Image;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
-import javax.swing.ImageIcon;
 import me.streeK.snake.Constants;
 import me.streeK.snake.game.MoveDirection;
 import me.streeK.snake.input.Keylistener;
-import org.jetbrains.annotations.NotNull;
+import me.streeK.snake.utils.FileUtils;
 
 public class Player extends Entity {
 
   private final Image body;
-  ImageIcon headUpIcon = new ImageIcon("resources/head.png");
-  ImageIcon headDownIcon = new ImageIcon("resources/headDown.png");
-  ImageIcon headLeftIcon = new ImageIcon("resources/headLeft.png");
-  ImageIcon headRightIcon = new ImageIcon("resources/headRight.png");
-  private final Image headUp = headUpIcon.getImage();
-  private final Image headDown = headDownIcon.getImage();
-  private final Image headLeft = headLeftIcon.getImage();
-  private final Image headRight = headRightIcon.getImage();
+  private final Image headUp = FileUtils.loadImageFromResources("head.png");
+  private final Image headDown = FileUtils.loadImageFromResources("headDown.png");
+  private final Image headLeft = FileUtils.loadImageFromResources("headLeft.png");
+  private final Image headRight = FileUtils.loadImageFromResources("headRight.png");
 
 
   private MoveDirection currentMoveDirection = MoveDirection.RIGHT;
@@ -34,8 +29,7 @@ public class Player extends Entity {
   public Player() {
     super("headRight.png");
     generateRandomCords();
-    ImageIcon imageEntity = new ImageIcon("resources/body.png");
-    this.body = imageEntity.getImage();
+    this.body = FileUtils.loadImageFromResources("body.png");
   }
 
   public void move() {
@@ -93,7 +87,6 @@ public class Player extends Entity {
     return body;
   }
 
-  @NotNull
   public List<Location> getBodyLocations() {
     return bodyLocations;
   }

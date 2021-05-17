@@ -1,25 +1,26 @@
 package me.streeK.snake.game;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import me.streeK.snake.utils.FileUtils;
 
 public class HighScore {
 
   private int currentScore = 0;
-  private final Path path = Paths.get("resources/highscore.txt");
+  private final File file = FileUtils.loadFileFromResources("highscore.txt");
   private int highScore;
 
   public HighScore() {
-    highScore = getHighScoreFromFile();
+//    highScore = getHighScoreFromFile();
   }
 
   public void checkIfNewHighscore() {
     try {
       if (currentScore > highScore) {
         highScore = currentScore;
-        Files.writeString(path, String.valueOf(highScore));
+        Files.writeString(Path.of(file.getPath()), String.valueOf(highScore));
       }
     } catch (IOException e) {
       e.printStackTrace();
@@ -36,6 +37,11 @@ public class HighScore {
 
   public int getHighScoreFromFile() {
     try {
+      Path path = Path.of(file.getPath());
+      if (!Files.exists(path)) {
+        Files.createFile(path);
+        Files.writeString(path, "0");
+      }
       return Integer.parseInt(Files.readString(path));
     } catch (IOException e) {
       e.printStackTrace();
