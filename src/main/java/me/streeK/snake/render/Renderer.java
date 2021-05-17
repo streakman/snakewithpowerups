@@ -36,10 +36,19 @@ public class Renderer {
         gameOver.draw(g);
         drawCenteredText(g, "HIGHSCORE: " + GameLogic.score.getHighScore());
       }
+
       if (GameLogic.isGamePaused) {
         gamePause.draw(g);
       }
     }
+  }
+
+  private void drawCenteredText(Graphics2D g, String text) {
+    g.setFont(new Font("Ink Free", Font.BOLD, 30));
+    FontMetrics metrics = g.getFontMetrics();
+    g.setColor(new Color(255, 255, 255, 62));
+    int fontXCord = (Constants.WIDTH - metrics.stringWidth(text)) / 2;
+    g.drawString(text, fontXCord, 50);
   }
 
   private void drawPlayer(Graphics2D g) {
@@ -51,5 +60,6 @@ public class Renderer {
       }
     }
   }
+}
 
 

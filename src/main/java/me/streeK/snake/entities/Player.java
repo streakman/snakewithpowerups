@@ -93,6 +93,7 @@ public class Player extends Entity {
     return body;
   }
 
+  @NotNull
   public List<Location> getBodyLocations() {
     return bodyLocations;
   }
