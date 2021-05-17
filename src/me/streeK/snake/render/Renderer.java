@@ -1,7 +1,10 @@
 package me.streeK.snake.render;
 
-import java.awt.*;
-
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import me.streeK.snake.Constants;
 import me.streeK.snake.entities.Apple;
 import me.streeK.snake.entities.Location;
 import me.streeK.snake.entities.Player;
@@ -25,15 +28,13 @@ public class Renderer {
       }
 
       drawPlayer(g);
-      g.setFont(new Font("Ink Free", Font.BOLD,30));
-      FontMetrics metrics = g.getFontMetrics();
-      g.setColor(new Color(255,255,255,62));
-      int fontXCord = (500 - metrics.stringWidth("SCORE: " + GameLogic.score.getCurrentScore())) / 2;
-      g.drawString("SCORE: " + GameLogic.score.getCurrentScore(),fontXCord, 50);
-
+      if (!GameLogic.gameIsOver) {
+        drawCenteredText(g, "SCORE: " + GameLogic.score.getCurrentScore());
+      }
 
       if (GameLogic.gameIsOver) {
         gameOver.draw(g);
+        drawCenteredText(g, "HIGHSCORE: " + GameLogic.score.getHighScore());
       }
       if (GameLogic.isGamePaused) {
         gamePause.draw(g);
@@ -44,9 +45,7 @@ public class Renderer {
   private void drawPlayer(Graphics2D g) {
     Player player = GameLogic.activePlayer;
     if (player != null) {
-        player.drawHead(g);
-      }
-
+      player.drawHead(g);
       for (Location location : player.getBodyLocations()) {
         g.drawImage(player.getBodyImage(), location.getX(), location.getY(), null);
       }

@@ -1,6 +1,6 @@
 package me.streeK.snake.game;
 
-import static java.lang.System.currentTimeMillis;
+
 
 import me.streeK.snake.Constants;
 import me.streeK.snake.Snake;
@@ -30,8 +30,9 @@ public class GameLogic {
 
   public static boolean checkIfOnApple() {
     if (activePlayer.getX() == activeApple.getX() && activePlayer.getY() == activeApple.getY()) {
-      activeApple = new Apple();
       score.increaseScore();
+      activeApple = new Apple();
+
       return true;
     }
     return false;
@@ -39,11 +40,11 @@ public class GameLogic {
 
 
   public static void checkIfOnPowerup() {
-    if ((currentTimeMillis() - activationTime) >= Constants.POWER_UP_DURATION_MS) {
+    if ((System.currentTimeMillis() - activationTime) >= Constants.POWER_UP_DURATION_MS) {
       Snake.ticksPerSecond = Constants.BASE_GAME_SPEED;
     }
     if (activePlayer.getX() == activePowerup.getX() && activePlayer.getY() == activePowerup.getY()) {
-      activationTime = currentTimeMillis();
+      activationTime = System.currentTimeMillis();
       activePowerup = new Powerup();
       Snake.ticksPerSecond = Constants.BASE_GAME_SPEED * 2;
     }
@@ -89,7 +90,6 @@ public class GameLogic {
     if (GameLogic.activePlayer != null) {
       GameLogic.activePlayer.clearBodyLocations();
     }
-
     GameLogic.activePlayer = new Player();
     Keylistener.setCurrentInputMoveDirection(MoveDirection.RIGHT);
     for (int i = 1; i <= Constants.SNAKE_LENGTH; i++) {
@@ -98,6 +98,7 @@ public class GameLogic {
     Snake.ticksPerSecond = Constants.BASE_GAME_SPEED;
     GameLogic.activePowerup = new Powerup();
     GameLogic.activeApple = new Apple();
+    score.setCurrentScore(0);
     if (GameLogic.gameIsOver) {
       GameLogic.gameIsOver = false;
     }
