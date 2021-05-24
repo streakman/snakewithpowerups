@@ -2,7 +2,9 @@ package me.streeK.snake.utils;
 
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 /**
@@ -22,10 +24,11 @@ public class FileUtils {
   }
 
   public static Image loadImageFromResources(String name) {
-    File file = loadFileFromResources(name);
-    if (file == null) {
-      return null;
+    try {
+      return new ImageIcon(ImageIO.read(Thread.currentThread().getContextClassLoader().getResourceAsStream(name))).getImage();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-    return new ImageIcon(file.getAbsolutePath()).getImage();
+    return null;
   }
 }
